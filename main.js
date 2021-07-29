@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 const { Cheerio } = require("cheerio")
 
 const { GetServerStatus } = require("./new-world-status")
-const { GetEmbedNotificationMessage } = require("./message-format")
+const { GetEmbedNotificationMessage } = require("./discord-message")
 const { NEW_LINE_EMBED, CHANNEL_ID } = require("./constants")
 
 const client = new Discord.Client()
@@ -17,9 +17,9 @@ client.on("ready", () => {
   console.log(`O pai ta on ${client.user.tag}!`)
   const channel = client.channels.cache.get(CHANNEL_ID)
   
-  const job = schedule.scheduleJob(rule, function(){
-    console.log('The answer to life, the universe, and everything!', Date.now());
-  });
+  // const job = schedule.scheduleJob(rule, function(){
+  //   console.log('The answer to life, the universe, and everything!', Date.now());
+  // });
 
   GetServerStatus().then((response) => {
     let messageNotification = GetEmbedNotificationMessage(response)
@@ -29,16 +29,9 @@ client.on("ready", () => {
   });
 })
 
-
 client.on("!nw subscribe region", (message) => {
   console.log(message.send("subscribe server status"))
 })
-
-// channel.
-// channel.send('hello!')
-//   .then(message => console.log(`Sent message: ${message.content}`))
-//   .catch(console.error);
-
 
 // client.on("message", msg => {
 //     if (msg.content === "dale") {

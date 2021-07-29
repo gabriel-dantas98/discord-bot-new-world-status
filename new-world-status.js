@@ -58,5 +58,4 @@ async function GetServerStatus() {
     }
 }
 
-// getServerStatus().then((status) => console.log(status));
 module.exports = { GetServerStatus }
