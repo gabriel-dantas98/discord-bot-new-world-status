@@ -44,4 +44,9 @@ const GetEmojiStatus = (status) => {
     return FIRE_EMOJI
 } 
 
+const GetWelcomeMessage = () => {
+
+}
+
+
 module.exports = { GetEmbedNotificationMessage }

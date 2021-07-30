@@ -2,15 +2,17 @@ const schedule = require('node-schedule');
 const Discord = require("discord.js")
 const { Cheerio } = require("cheerio")
 
-const { GetServerStatus } = require("./new-world-status")
+const { GetServerStatus } = require("./nw-status-scraper")
 const { GetEmbedNotificationMessage } = require("./discord-message")
-const { NEW_LINE_EMBED, CHANNEL_ID } = require("./constants")
+const { NEW_LINE_EMBED, CHANNEL_ID, BOT_TOKEN } = require("./constants")
 
 const client = new Discord.Client()
 const message = new Discord.Message()
-const rule = "*/10 * * * * *" //every 10s
 
-client.login(":p")
+const rule = "*/10 * * * * *" //every 10s
+const prefix = "!nw";
+
+client.login(BOT_TOKEN)
 
 client.on("ready", () => {
 
@@ -29,18 +31,35 @@ client.on("ready", () => {
   });
 })
 
-client.on("!nw subscribe region", (message) => {
-  console.log(message.send("subscribe server status"))
-})
+client.on("message", message => {
+  if (message.author.bot) return;
 
-// client.on("message", msg => {
-//     if (msg.content === "dale") {
-//       msg.reply("dolly");
-//     }
-//     if (msg.content === "caiu?") {
-//         GetServerStatus().then((serverStatus) => { 
-//             msg.reply(serverStatus)
-//         })  
-//       }
+  if (message.content.indexOf(prefix) !== 0) return;
+
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  let action, parameter = "";
   
-// })
+  switch (command) {
+
+    case "subscribe":
+      action = args[2] 
+      parameter = args[3]
+
+      message.channel.send("command: " + command +  " action: " + args);
+    break;
+
+    case "region":
+      action = args[2]
+      parameter = args[3]
+      
+      message.channel.send("command: " + command +  " action: " + args);
+      break;
+    case "server":
+      action = args[2] 
+      parameter = args[3]
+  
+      message.channel.send("command: " + command +  " action: " + args);
+    break;
+  }
+});
